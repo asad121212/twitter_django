@@ -11,8 +11,16 @@ def index(request):
     return render(request,'index.html')
 
 def tweet_list(request):
-    tweets=Tweet.objects.all().order_by('-created_at')    
-    return render(request,'tweet_list.html',{'tweets':tweets})
+    query = request.GET.get('q')  # Get search term from URL
+
+    if query:
+        # If there's a search term, filter tweets containing that text
+        tweets = Tweet.objects.filter(text__icontains=query).order_by('-created_at')
+    else:
+        # If no search term, show all tweets
+        tweets = Tweet.objects.all().order_by('-created_at')
+
+    return render(request, 'tweet_list.html', {'tweets': tweets})
 
 @login_required
 def tweet_create(request):

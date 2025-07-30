@@ -8,6 +8,10 @@
     <h1 class="text-center  mt-4">Welcome to chai django project</h1>
 
     <a class = " btn btn-primary mb-3" href="{% url 'tweet_create' %}">Create a Tweet</a>
+    <!-- ✅ Search result heading (if any query) -->
+    {% if request.GET.q %}
+        <h4>Search results for "{{ request.GET.q }}"</h4>
+    {% endif %}
     <div class="container row gap-3">
         {% for tweet in tweets %}
             <div class="card" style="width: 18rem;">
